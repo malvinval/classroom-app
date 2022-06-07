@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 class ClassroomRegistrarController extends Controller
 {
     public function store(Request $request) {
-
         // check if the requested classroom exist.
         
         $classrooms = Classroom::all();
@@ -44,20 +43,17 @@ class ClassroomRegistrarController extends Controller
             foreach($classrooms as $classroom) {
                 if (password_verify($request["access_code"], $classroom->access_code)) {
                     $validatedData["raw_access_code"] = $classroom->raw_access_code;
-
                     $validatedData["access_code"] = $classroom->access_code;
                     $validatedData["name"] = $classroom->name;
                     $validatedData["slug"] = $classroom->slug;
+                    $validatedData["description"] = $classroom->description;
                     $validatedData["creator_id"] = $classroom->creator_id;
-                    $validatedData["description"] = $classroom->description;
-                    $validatedData["registrar_id"] = auth()->user()->id;
                     $validatedData["creator_name"] = $classroom->creator_name;
-                    $validatedData["description"] = $classroom->description;
                     $validatedData["registrar_id"] = auth()->user()->id;
                     $validatedData["registrar_name"] = auth()->user()->name;
                 }
             }
-
+            
             ClassroomRegistrar::create($validatedData);
         }
         

@@ -42,7 +42,7 @@ class MyClassroomController extends Controller
     {
         $validatedData = $request->validate([
             "name" => "required|max:255",
-            "slug" => "required|unique:classrooms",
+            "slug" => "required",
             "description" => "required|max:255"
         ]);
 
@@ -126,16 +126,17 @@ class MyClassroomController extends Controller
 
         $validatedData = $request->validate([
             "name" => "required|max:255",
+            "slug" => "required",
             "description" => "required|max:255"
         ]);
 
-        if($request->slug != $classroom[0]->slug) {
-            $validatedData = $request->validate([
-                "name" => "required|max:255",
-                "slug" => "required|unique:classrooms",
-                "description" => "required|max:255"
-            ]);
-        }
+        // if($request->slug != $classroom[0]->slug) {
+        //     $validatedData = $request->validate([
+        //         "name" => "required|max:255",
+        //         "slug" => "required|unique:classrooms",
+        //         "description" => "required|max:255"
+        //     ]);
+        // }
 
         $validatedData["id"] = $classroom[0]->id;
 

@@ -29,12 +29,19 @@
             </thead>
 
             <tbody>
-                @foreach ($classrooms->skip(1) as $classroom)
+                @if($classrooms->count() > 1)
+                    @foreach ($classrooms->skip(1) as $classroom)
+                        <tr>
+                            <td>{{$classroom->registrar_name}} {{ $classroom->registrar_id == auth()->user()->id ? "(You)" : "" }}</td>
+                            <td>{{$classroom->created_at}}</td>
+                        </tr>
+                    @endforeach
+                @else
                     <tr>
-                        <td>{{$classroom->registrar_name}} {{ $classroom->registrar_id == auth()->user()->id ? "(You)" : "" }}</td>
-                        <td>{{$classroom->created_at}}</td>
-                    </tr>
-                @endforeach
+                        <td>No students yet.</td>
+                        <td></td>
+                    </tr>  
+                @endif
             </tbody>
         </table>
     </div>

@@ -21,14 +21,9 @@ return new class extends Migration
             $table->string("slug");
             $table->integer("creator_id");
             $table->string("creator_name");
-<<<<<<< HEAD
             $table->string("description")->nullable();
             $table->integer("registrar_id");
-=======
-            $table->string("description");
-            $table->integer("registrar_id");
             $table->string("registrar_name");
->>>>>>> 898aa7a (Classroom CRUD & Details)
             $table->timestamps();
         });
     }
