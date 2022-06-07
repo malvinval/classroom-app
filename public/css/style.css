@@ -1,0 +1,33 @@
+* {
+    font-family: 'Work Sans', sans-serif;
+}
+
+.logout-link {
+    text-transform: uppercase;
+}
+
+.card-container, .myclassroom-container, .myclassroom-details-container {
+    margin-top: 100px;
+}
+
+.card-creator-name {
+    font-weight: 300;
+}
+
+.creator-img {
+    width: 150px;
+    height: 150px;
+}
+
+.classroom-header {
+    margin-top: 100px;
+}
+
+
+/* .myclassroom-buttons-container {
+    display: none;
+}
+
+.myclassroom-buttons-container-visible {
+    display: block;
+} */
