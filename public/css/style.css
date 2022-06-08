@@ -6,7 +6,8 @@
     text-transform: uppercase;
 }
 
-.card-container, .myclassroom-container, .myclassroom-details-container {
+.card-container, .myclassroom-container, .myclassroom-details-container,
+.create-forum-form-container {
     margin-top: 100px;
 }
 
@@ -23,11 +24,8 @@
     margin-top: 100px;
 }
 
-
-/* .myclassroom-buttons-container {
-    display: none;
-}
-
-.myclassroom-buttons-container-visible {
+.toast {
     display: block;
-} */
+    margin: 100px auto;
+    z-index: 10;
+}

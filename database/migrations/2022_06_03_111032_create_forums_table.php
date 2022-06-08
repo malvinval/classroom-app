@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('forums', function (Blueprint $table) {
             $table->id();
+            $table->string("title");
             $table->string("classroom_access_code");
             $table->text("caption");
+            $table->boolean("isAttachFile")->default(false);
             $table->timestamps();
         });
     }

@@ -1,6 +1,27 @@
 @extends('layouts.core')
 
 @section('container')
+    @if (session()->has("success"))
+        <div class="toast show border-success" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <h6 class="me-auto">{{ env("APP_NAME") }} says :</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <p class="text-success">{{ session("success") }}</p> 
+            </div>
+        </div>
+    @elseif(session()->has("failed"))
+        <div class="toast show border-danger" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <h6 class="me-auto">{{ env("APP_NAME") }} says :</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <p class="text-danger">{{ session("failed") }}</p>
+            </div>
+        </div>
+    @endif
     <div class="container card-container d-flex flex-wrap">
         @if($classrooms->count())
             @foreach ($classrooms as $classroom)

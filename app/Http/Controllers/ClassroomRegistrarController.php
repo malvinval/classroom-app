@@ -55,8 +55,8 @@ class ClassroomRegistrarController extends Controller
             }
             
             ClassroomRegistrar::create($validatedData);
+            return redirect("/c")->with("success", "You joined a new class !");
         }
-        
-        return redirect("/c")->with("success", "You joined a new class !");
+        return redirect("/c")->with("failed", "Classroom not found !");
     }
 }

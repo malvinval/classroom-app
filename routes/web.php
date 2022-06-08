@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClassroomRegistrarController;
+use App\Http\Controllers\ForumController;
 use App\Http\Controllers\MyClassroomController;
 use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,7 @@ Route::get('/c', [SiteController::class, 'classrooms'])->name("classrooms")->mid
 Route::get('/c/{classroom:access_code}', [SiteController::class, 'classroom'])->name("classroom")->middleware("auth");
 
 Route::resource('/mc', MyClassroomController::class);
+Route::resource('/f', ForumController::class);
 
 Route::post('/join', [ClassroomRegistrarController::class, 'store'])->middleware("auth");
 

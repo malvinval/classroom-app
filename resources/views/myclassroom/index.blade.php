@@ -2,8 +2,16 @@
 
 @section('container')
     <div class="container myclassroom-container">
-        <a href="/mc/create" class="btn btn-success"><i class="bi bi-plus-lg"></i> Create new class</a>
-
+        <div class="dropdown">
+            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-plus-lg"></i> Create
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="/mc/create">New classroom</a></li>
+              <li><a class="dropdown-item" href="/f/create">New forum</a></li>
+            </ul>
+        </div>
+        
         <div class="myclassroom-list-container mt-4">
             @if($myclassrooms->count())
                 @foreach ($myclassrooms as $myclassroom)
@@ -26,7 +34,7 @@
                                         </div>
                                         <small class="text-muted">{{ $myclassroom->raw_access_code }}</small>
                                         <br>
-                                        <a href="/c/{{ $myclassroom->access_code }}" class="btn btn-success mt-4">Check</a>
+                                        <a href="/c/{{ $myclassroom->access_code }}" class="btn text-success border-success mt-4">Check</a>
                                     </div>
                                 </div>
                             </div>
