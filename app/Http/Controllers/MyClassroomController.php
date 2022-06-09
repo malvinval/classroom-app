@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Classroom;
 use App\Models\ClassroomRegistrar;
 use App\Models\Creator;
+use App\Models\Forum;
 use Faker\Factory;
 use Illuminate\Http\Request;
 
@@ -160,9 +161,11 @@ class MyClassroomController extends Controller
     {
         $classroom = Classroom::where("access_code", $access_code)->get();
         $classroom_registrar = ClassroomRegistrar::where("access_code", $access_code)->get();
+        $forums = Forum::where("access_code", $access_code)->get();
     
         Classroom::destroy($classroom);
         ClassroomRegistrar::destroy($classroom_registrar);
+        Forum::destroy($forums);
 
         return redirect("/mc")->with("warning", "Your classroom has been deleted permanently !");
     }

@@ -7,7 +7,7 @@
 }
 
 .card-container, .myclassroom-container, .myclassroom-details-container,
-.create-forum-form-container {
+.create-forum-form-container, .single-forum-detail-header-container {
     margin-top: 100px;
 }
 

@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string("title");
             $table->string("classroom_access_code");
             $table->text("caption");
-            $table->boolean("isAttachFile")->default(false);
+            $table->char("isAttachFile")->default('N');
+            $table->string("creator_name");
+            $table->integer("creator_id");
             $table->timestamps();
         });
     }

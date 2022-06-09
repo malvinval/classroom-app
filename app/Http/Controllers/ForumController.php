@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classroom;
+use App\Models\Forum;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ForumController extends Controller
@@ -23,7 +26,9 @@ class ForumController extends Controller
      */
     public function create()
     {
-        return view("forum.create");
+        $myclassrooms = Classroom::where("creator_id", auth()->user()->id)->get();
+
+        return view("forum.create", compact("myclassrooms"));
     }
 
     /**
@@ -34,7 +39,20 @@ class ForumController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'caption' => 'required',
+            'isAttachFile' => 'required'
+        ]);
+
+        $validatedData['classroom_access_code'] = $request['classroom_access_code'];
+        $validatedData['creator_name'] = auth()->user()->name;
+        $validatedData['creator_id'] = auth()->user()->id;
+
+        Forum::create($validatedData);
+
+        return redirect('/mc');
     }
 
     /**
@@ -45,7 +63,14 @@ class ForumController extends Controller
      */
     public function show($id)
     {
-        //
+        $specified_forum = Forum::find($id);
+
+        $classroom = Classroom::where("access_code", $specified_forum->classroom_access_code)->get();
+
+        return view('forum.show', [
+            "classroom" => $classroom,
+            "specified_forum" => $specified_forum
+        ]);
     }
 
     /**

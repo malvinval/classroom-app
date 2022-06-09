@@ -35,7 +35,7 @@ class SiteController extends Controller
         
         // show forums data
 
-        $forums = Forum::where("classroom_access_code", $classroom->access_code)->get();
+        $forums = Forum::where("classroom_access_code", $classroom->access_code)->latest()->get();
 
         return view("classroom", [
             "classroomName" => $classroom->name,

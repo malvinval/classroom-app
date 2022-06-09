@@ -6,6 +6,24 @@
             <form method="POST" action="/f" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
+                    <label for="classroom_access_code" class="form-label">Choose classroom</label>
+                    <select class="form-select @error('classroom_access_code') is-invalid @enderror" name="classroom_access_code" id="classroom_access_code">
+                        @foreach($myclassrooms as $myclassroom)
+                            @if(old("classroom_access_code") == $myclassroom->access_code)
+                                <option value="{{ $myclassroom->access_code }}" selected>{{ $myclassroom->name }}</option>
+                            @else
+                                <option value="{{ $myclassroom->access_code }}">{{ $myclassroom->name }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                    @error("classroom_access_code")
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" autofocus
                     value="{{ old('title') }}" autocomplete="off">
@@ -29,13 +47,13 @@
 
                 <label class="mb-3">Must attach file ?</label>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <input class="form-check-input" type="radio" name="isAttachFile" id="flexRadioDefault1" value="Y">
                     <label class="form-check-label" for="flexRadioDefault1">
                     Yes
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                    <input class="form-check-input" type="radio" name="isAttachFile" id="flexRadioDefault2" value="N" checked>
                     <label class="form-check-label" for="flexRadioDefault2">
                     No
                     </label>

@@ -8,7 +8,9 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li><a class="dropdown-item" href="/mc/create">New classroom</a></li>
-              <li><a class="dropdown-item" href="/f/create">New forum</a></li>
+              @if($myclassrooms->count())
+                <li><a class="dropdown-item" href="/f/create">New forum</a></li>
+              @endif
             </ul>
         </div>
         
