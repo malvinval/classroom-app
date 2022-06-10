@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classroom;
+use App\Models\ClassroomRegistrar;
 use App\Models\Forum;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -65,6 +66,14 @@ class ForumController extends Controller
     {
         $specified_forum = Forum::find($id);
 
+        // validate registrar
+
+        $isRegistar = ClassroomRegistrar::where("access_code", $specified_forum->classroom_access_code)->where("registrar_id", auth()->user()->id)->count();
+
+        if($isRegistar == 0) {
+            abort(403);
+        }
+
         $classroom = Classroom::where("access_code", $specified_forum->classroom_access_code)->get();
 
         return view('forum.show', [
@@ -81,7 +90,9 @@ class ForumController extends Controller
      */
     public function edit($id)
     {
-        //
+        $forum = Forum::find($id);
+
+        return view('forum.edit', compact("forum"));
     }
 
     /**
@@ -93,7 +104,18 @@ class ForumController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $forum = Forum::find($id);
+
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'caption' => 'required',
+            'isAttachFile' => 'required'
+        ]);
+        $validatedData['isEdited'] = true;
+
+        $forum->update($validatedData);
+
+        return redirect('/c/' . $forum->classroom_access_code);
     }
 
     /**

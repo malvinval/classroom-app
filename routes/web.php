@@ -22,8 +22,8 @@ Route::get('/', [SiteController::class, 'index'])->name("home")->middleware("aut
 Route::get('/c', [SiteController::class, 'classrooms'])->name("classrooms")->middleware("auth");
 Route::get('/c/{classroom:access_code}', [SiteController::class, 'classroom'])->name("classroom")->middleware("auth");
 
-Route::resource('/mc', MyClassroomController::class);
-Route::resource('/f', ForumController::class);
+Route::resource('/mc', MyClassroomController::class)->middleware("auth");
+Route::resource('/f', ForumController::class)->middleware("auth");
 
 Route::post('/join', [ClassroomRegistrarController::class, 'store'])->middleware("auth");
 

@@ -22,7 +22,7 @@
             </li>
           </ul>
 
-          <form class="d-flex mb-2 mt-5" role="search" method="GET" action="/c">
+          <form class="d-flex mb-2 mt-2" role="search" method="GET" action="/c">
 
             <input class="form-control me-2" name="search" type="search" placeholder="Search a classroom..." aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
