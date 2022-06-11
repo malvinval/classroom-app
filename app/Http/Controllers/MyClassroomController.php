@@ -161,7 +161,7 @@ class MyClassroomController extends Controller
     {
         $classroom = Classroom::where("access_code", $access_code)->get();
         $classroom_registrar = ClassroomRegistrar::where("access_code", $access_code)->get();
-        $forums = Forum::where("access_code", $access_code)->get();
+        $forums = Forum::where("classroom_access_code", $access_code)->get();
     
         Classroom::destroy($classroom);
         ClassroomRegistrar::destroy($classroom_registrar);

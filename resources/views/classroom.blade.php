@@ -39,6 +39,15 @@
             <div class="single-forum-caption-container mt-3">
               {!! $forum->caption !!}
             </div>
+
+            <div class="single-forum-teacher-attachment-file-container mt-3">
+              @foreach($files as $file)
+                @if($file->forum_id == $forum->id)
+                {{-- {{ dd($file) }} --}}
+                  <a href="/storage/{{ $file->file }}">Download file</a>
+                @endif
+              @endforeach
+            </div>
           @endif
         </div>
       @endforeach

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Classroom;
 use App\Models\ClassroomRegistrar;
 use App\Models\Forum;
+use App\Models\ForumTeacherFileAttachment;
 use Illuminate\Http\Request;
 
 class SiteController extends Controller
@@ -37,10 +38,15 @@ class SiteController extends Controller
 
         $forums = Forum::where("classroom_access_code", $classroom->access_code)->latest()->get();
 
+        // show forum teacher file attachment data
+
+        $files = ForumTeacherFileAttachment::all();
+
         return view("classroom", [
             "classroomName" => $classroom->name,
             "classroomDescription" => $classroom->description,
-            "forums" => $forums
+            "forums" => $forums,
+            "files" => $files
         ]);
     }
 }

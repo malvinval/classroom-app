@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Classroom;
 use App\Models\ClassroomRegistrar;
 use App\Models\Forum;
+use App\Models\ForumTeacherFileAttachment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -40,7 +41,6 @@ class ForumController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         $validatedData = $request->validate([
             'title' => 'required|max:255',
             'caption' => 'required',
@@ -52,6 +52,22 @@ class ForumController extends Controller
         $validatedData['creator_id'] = auth()->user()->id;
 
         Forum::create($validatedData);
+
+        if($request->file("teacher_file_attachment")) {
+            $forum = Forum::latest()->first();
+
+            $validatedFileData = $request->validate([
+                'teacher_file_attachment' => 'file|max:1024'
+            ]);
+
+            $validatedFileData['forum_id'] = $forum->id;
+            $validatedFileData['creator_name'] = $forum->creator_name;
+            $validatedFileData['creator_id'] = $forum->creator_id;
+
+            $validatedFileData['file'] = $request->file("teacher_file_attachment")->store("forum-teacher-file-attachment");
+
+            ForumTeacherFileAttachment::create($validatedFileData);
+        }
 
         return redirect('/mc');
     }

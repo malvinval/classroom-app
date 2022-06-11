@@ -44,8 +44,20 @@
                         </div>
                     @enderror
                 </div>
+            
+                <div class="mb-3">
+                    <label for="formFileMultiple" class="form-label">Attach file (optional)</label>
+                    <input class="form-control @error('teacher_file_attachment') is-invalid @enderror" type="file" id="formFileMultiple"  name="teacher_file_attachment" multiple>
+                    @error("teacher_file_attachment")
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                {{-- <input class="form-control mb-3 @error('teacher_file') is-invalid @enderror" type="file" id="teacher_file" name="teacher_file"> --}}
 
-                <label class="mb-3">Must attach file ?</label>
+
+                <label class="mb-3">Students attach file ?</label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="isAttachFile" id="flexRadioDefault1" value="Y">
                     <label class="form-check-label" for="flexRadioDefault1">
@@ -58,6 +70,7 @@
                     No
                     </label>
                 </div>
+
 
                 <button type="submit" class="btn btn-success mt-3">Create</button>
             </form>
