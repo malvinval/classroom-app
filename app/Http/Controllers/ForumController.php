@@ -6,8 +6,8 @@ use App\Models\Classroom;
 use App\Models\ClassroomRegistrar;
 use App\Models\Forum;
 use App\Models\ForumTeacherFileAttachment;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ForumController extends Controller
 {
@@ -41,6 +41,8 @@ class ForumController extends Controller
      */
     public function store(Request $request)
     {
+        $classroom = Classroom::where("access_code", $request["classroom_access_code"])->get();
+
         $validatedData = $request->validate([
             'title' => 'required|max:255',
             'caption' => 'required',
@@ -64,7 +66,13 @@ class ForumController extends Controller
             $validatedFileData['creator_name'] = $forum->creator_name;
             $validatedFileData['creator_id'] = $forum->creator_id;
 
-            $validatedFileData['file'] = $request->file("teacher_file_attachment")->store("forum-teacher-file-attachment");
+            $specified_forum = Forum::find($forum->id);
+
+            foreach($classroom as $c) {
+                $specified_forum_title = strtolower($specified_forum->title);
+                $specified_forum_title = str_replace(' ', '-', $specified_forum_title);
+                $validatedFileData['file'] = $request->file("teacher_file_attachment")->store("forum-teacher-file-attachment/" . $c->slug . "/" . $specified_forum_title);
+            }
 
             ForumTeacherFileAttachment::create($validatedFileData);
         }
@@ -94,7 +102,8 @@ class ForumController extends Controller
 
         return view('forum.show', [
             "classroom" => $classroom,
-            "specified_forum" => $specified_forum
+            "specified_forum" => $specified_forum,
+            "creator_id" => $specified_forum->creator_id
         ]);
     }
 
@@ -121,6 +130,7 @@ class ForumController extends Controller
     public function update(Request $request, $id)
     {
         $forum = Forum::find($id);
+        $classroom = Classroom::where("access_code", $forum->classroom_access_code)->get();
 
         $validatedData = $request->validate([
             'title' => 'required|max:255',
@@ -130,6 +140,38 @@ class ForumController extends Controller
         $validatedData['isEdited'] = true;
 
         $forum->update($validatedData);
+
+        if($request->file("teacher_file_attachment")) {
+            $validatedFileData = $request->validate([
+                'file' => 'file|max:1024'
+            ]);
+
+            $validatedFileData['forum_id'] = $forum->id;
+            $validatedFileData['creator_name'] = $forum->creator_name;
+            $validatedFileData['creator_id'] = $forum->creator_id;
+            
+            $specified_forum = Forum::find($forum->id);
+
+            foreach($classroom as $c) {
+                $specified_forum_title = strtolower($specified_forum->title);
+                $specified_forum_title = str_replace(' ', '-', $specified_forum_title);
+                
+                // delete old stored files
+
+                $spesified_file = ForumTeacherFileAttachment::where("forum_id", $specified_forum->id)->get();
+                
+                foreach($spesified_file as $file) {
+                    if(file_exists("storage/".$file->file))
+                    {
+                        Storage::delete($file->file);
+                    }
+                }
+                
+                $validatedFileData['file'] = $request->file("teacher_file_attachment")->store("forum-teacher-file-attachment/" . $c->slug . "/" . $specified_forum_title);
+            }
+
+            ForumTeacherFileAttachment::where("forum_id", $id)->update($validatedFileData);
+        }
 
         return redirect('/c/' . $forum->classroom_access_code);
     }

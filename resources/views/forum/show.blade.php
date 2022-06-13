@@ -12,17 +12,23 @@
             <div class="single-forum-detail-body-container mt-3">
                 <p>{!! $specified_forum->caption !!}</p>
 
-                <form method="POST" enctype="multipart/form-data">
-                    <div class="mb-3 w-50">
-                      <input class="form-control @error('file_attachment') is-invalid @enderror" type="file" id="file_attachment" name="file_attachment">
-      
-                      @error("file_attachment")
-                          <div class="invalid-feedback">
-                              {{ $message }}
-                          </div>
-                      @enderror
-                    </div>
-                </form>
+                @if($creator_id == auth()->user()->id)
+                    <a href="#" class="btn btn-success mt-3">Check</a>
+                @else
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="mb-3 w-50">
+                        <input class="form-control @error('file_attachment') is-invalid @enderror" type="file" id="file_attachment" name="file_attachment">
+        
+                        @error("file_attachment")
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                        </div>
+
+                        <button type="submit" name="submit" class="btn btn-success mt-3">Submit</button>
+                    </form>
+                @endif
             </div>
         @endforeach
     </div>
