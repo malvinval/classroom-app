@@ -2,19 +2,33 @@
 
 @section('container')
     <div class="container myclassroom-container">
-        <div class="dropdown">
-            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-plus-lg"></i> Create
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" href="/mc/create">New classroom</a></li>
-              @if($myclassrooms->count())
-                <li><a class="dropdown-item" href="/f/create">New forum</a></li>
-              @endif
-            </ul>
+        <div class="dropdown-container d-flex">
+            <div class="dropdown me-1">
+                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-plus-lg"></i> Create
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="/mc/create">New classroom</a></li>
+                    @if($myclassrooms->count())
+                    <li><a class="dropdown-item" href="/f/create">New forum</a></li>
+                    @endif
+                </ul>
+            </div>
+            
+            <div class="dropdown me-1">
+                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-journal-check"></i> Check
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#">Student's Assignments</a></li>
+                    @if($myclassrooms->count())
+                    <li><a class="dropdown-item" href="#">Student's Presence</a></li>
+                    @endif
+                </ul>
+            </div>
         </div>
-        
-        <div class="myclassroom-list-container mt-4">
+            
+            <div class="myclassroom-list-container mt-4">
             @if($myclassrooms->count())
                 @foreach ($myclassrooms as $myclassroom)
                     <div class="card mb-3 me-2" style="width: 400px;">

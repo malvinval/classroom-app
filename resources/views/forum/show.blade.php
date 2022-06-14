@@ -13,7 +13,7 @@
                 <p>{!! $specified_forum->caption !!}</p>
 
                 @if($creator_id == auth()->user()->id)
-                    <a href="#" class="btn btn-success mt-3">Check</a>
+                    <a href="/sa/{{ $specified_forum->id }}" class="btn btn-success mt-3">Check</a>
                 @else
                     <form method="POST" enctype="multipart/form-data">
                         <div class="mb-3 w-50">

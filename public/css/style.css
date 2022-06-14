@@ -8,7 +8,7 @@
 
 .card-container, .myclassroom-container, .myclassroom-details-container,
 .create-forum-form-container, .single-forum-detail-header-container,
-.forum-edit-form-container {
+.forum-edit-form-container, .student-assignments-container {
     margin-top: 100px;
 }
 
