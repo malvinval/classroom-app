@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Classroom;
 use App\Models\ClassroomRegistrar;
 use App\Models\Forum;
+use App\Models\ForumStudentFileAttachment;
 use App\Models\ForumTeacherFileAttachment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -100,10 +101,15 @@ class ForumController extends Controller
 
         $classroom = Classroom::where("access_code", $specified_forum->classroom_access_code)->get();
 
+        $student_file_attachment = ForumStudentFileAttachment::where("forum_id", $id)->where("sender_id", auth()->user()->id)->get();
+        $teacher_file_attachment = ForumTeacherFileAttachment::where("forum_id", $id)->get();
+
         return view('forum.show', [
             "classroom" => $classroom,
             "specified_forum" => $specified_forum,
-            "creator_id" => $specified_forum->creator_id
+            "creator_id" => $specified_forum->creator_id,
+            "student_file_attachment" => $student_file_attachment,
+            "teacher_file_attachment" => $teacher_file_attachment
         ]);
     }
 
@@ -158,9 +164,9 @@ class ForumController extends Controller
                 
                 // delete old stored files
 
-                $spesified_file = ForumTeacherFileAttachment::where("forum_id", $specified_forum->id)->get();
+                $specified_file = ForumTeacherFileAttachment::where("forum_id", $specified_forum->id)->get();
                 
-                foreach($spesified_file as $file) {
+                foreach($specified_file as $file) {
                     if(file_exists("storage/".$file->file))
                     {
                         Storage::delete($file->file);
@@ -184,6 +190,28 @@ class ForumController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $specified_forum = Forum::find($id);
+        $affected_student_file_attachments = ForumStudentFileAttachment::where("forum_id", $id)->get();
+        $affected_teacher_file_attachments = ForumTeacherFileAttachment::where("forum_id", $id)->get();
+
+        Forum::destroy($specified_forum->id);
+        ForumStudentFileAttachment::destroy($affected_student_file_attachments);
+        ForumTeacherFileAttachment::destroy($affected_teacher_file_attachments);
+
+        foreach($affected_student_file_attachments as $file) {
+            if(file_exists("storage/".$file->file))
+            {
+                Storage::delete($file->file);
+            }
+        }
+
+        foreach($affected_teacher_file_attachments as $file) {
+            if(file_exists("storage/".$file->file))
+            {
+                Storage::delete($file->file);
+            }
+        }
+
+        return redirect("/c/" . $specified_forum->classroom_access_code);
     }
 }

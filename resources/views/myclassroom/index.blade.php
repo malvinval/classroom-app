@@ -15,7 +15,7 @@
                 </ul>
             </div>
             
-            <div class="dropdown me-1">
+            {{-- <div class="dropdown me-1">
                 <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-journal-check"></i> Check
                 </button>
@@ -25,7 +25,7 @@
                     <li><a class="dropdown-item" href="#">Student's Presence</a></li>
                     @endif
                 </ul>
-            </div>
+            </div> --}}
         </div>
             
             <div class="myclassroom-list-container mt-4">
