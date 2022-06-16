@@ -38,7 +38,7 @@ class StudentAssignmentController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+        
         $specified_forum = Forum::find($request["forum_id"]);
         $classroom = Classroom::where("access_code", $specified_forum->classroom_access_code)->get();
 
@@ -49,6 +49,7 @@ class StudentAssignmentController extends Controller
         $validatedData['forum_id'] = $request["forum_id"];
         $validatedData['sender_id'] = auth()->user()->id;
         $validatedData['sender_name'] = auth()->user()->name;
+        $validatedData['original_file_name'] = $request->file("student_file_attachment")->getClientOriginalName();
 
         foreach($classroom as $c) {
             $specified_forum_title = strtolower($specified_forum->title);

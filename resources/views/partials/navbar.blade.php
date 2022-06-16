@@ -29,7 +29,7 @@
           </form>
           <form class="d-flex" method="POST" action="/join">
             @csrf
-            <input class="form-control me-2" name="access_code" type="text" placeholder="Enter access token..." aria-label="Search">
+            <input class="form-control me-2" name="access_code" type="text" placeholder="Enter classroom code..." aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Join</button>
           </form>
           <form class="d-flex mt-3" action="/logout" method="POST">

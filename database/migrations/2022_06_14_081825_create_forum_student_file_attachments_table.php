@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('forum_student_file_attachments', function (Blueprint $table) {
             $table->id();
-            $table->text("file")->nullable();
+            $table->text("file");
+            $table->text("original_file_name");
             $table->foreignId("forum_id");
             $table->integer("sender_id");
             $table->string("sender_name");

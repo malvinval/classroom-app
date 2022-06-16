@@ -4,6 +4,7 @@ use App\Http\Controllers\ClassroomRegistrarController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\MyClassroomController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\StorageController;
 use App\Http\Controllers\StudentAssignmentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,6 @@ Route::get('/c/{classroom:access_code}', [SiteController::class, 'classroom'])->
 
 Route::resource('/mc', MyClassroomController::class)->middleware("auth");
 Route::resource('/f', ForumController::class)->middleware("auth");
-
 Route::resource('/sa', StudentAssignmentController::class)->middleware("auth");
 
 Route::post('/join', [ClassroomRegistrarController::class, 'store'])->middleware("auth");

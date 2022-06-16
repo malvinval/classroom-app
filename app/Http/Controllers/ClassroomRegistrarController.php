@@ -11,6 +11,7 @@ class ClassroomRegistrarController extends Controller
     public function store(Request $request) {
         // check if the requested classroom exist.
         
+        
         $classrooms = Classroom::all();
         $isClassroomExist = 0;
         

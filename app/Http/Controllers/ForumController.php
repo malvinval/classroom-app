@@ -66,6 +66,8 @@ class ForumController extends Controller
             $validatedFileData['forum_id'] = $forum->id;
             $validatedFileData['creator_name'] = $forum->creator_name;
             $validatedFileData['creator_id'] = $forum->creator_id;
+            $validatedFileData['original_file_name'] = $request->file('teacher_file_attachment')->getClientOriginalName();
+
 
             $specified_forum = Forum::find($forum->id);
 

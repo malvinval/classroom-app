@@ -15,7 +15,7 @@
                     
                     @if($teacher_file_attachment->count())
                         @foreach ($teacher_file_attachment as $file)
-                            <a href="/storage/{{ $file->file }}">Download file</a>
+                            <a href="/storage/{{ $file->file }}">{{ $file->original_file_name }}</a>
                         @endforeach
                     @endif
                 </div>
@@ -28,7 +28,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <p class="text-muted">Your attachment : </p>
-                                    <a href="/storage/{{ $file->file }}">{{ $file->file }}</a>
+                                    <a href="/storage/{{ $file->file }}">{{ $file->original_file_name }}</a>
                                 </div>
                             </div>
                             <form action="/sa/{{ $file->id }}" method="POST">

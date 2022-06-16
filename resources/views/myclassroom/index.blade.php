@@ -44,7 +44,7 @@
                                                 <form action="/mc/{{ $myclassroom->access_code }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('delete')
-                                                    <button class="badge bg-danger border-0" onclick="return confirm('Are you sure want to delete this book ?');"><i class="bi bi-trash3-fill"></i></button>
+                                                    <button class="badge bg-danger border-0" onclick="return confirm('Are you sure want to delete this classroom ?');"><i class="bi bi-trash3-fill"></i></button>
                                                 </form>
                                             </div>
                                         </div>
