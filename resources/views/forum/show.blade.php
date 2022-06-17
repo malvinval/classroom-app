@@ -28,7 +28,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <p class="text-muted">Your attachment : </p>
-                                    <a href="/storage/{{ $file->file }}">{{ $file->original_file_name }}</a>
+                                    <a href="/storage/{{ $file->file }}" download="{{ $file->original_file_name }}">{{ $file->original_file_name }}</a>
                                 </div>
                             </div>
                             <form action="/sa/{{ $file->id }}" method="POST">

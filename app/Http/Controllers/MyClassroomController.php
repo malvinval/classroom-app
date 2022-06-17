@@ -139,7 +139,7 @@ class MyClassroomController extends Controller
         //     ]);
         // }
 
-        $validatedData["id"] = $classroom[0]->id;
+        // $validatedData["id"] = $classroom[0]->id;
 
         $validatedData["creator_id"] = auth()->user()->id;
         $validatedData["creator_name"] = auth()->user()->name;

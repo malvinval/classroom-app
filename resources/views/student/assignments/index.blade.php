@@ -16,7 +16,7 @@
                     @foreach ($student_assignments as $student_assignment)
                         <tr>
                             <td>{{$student_assignment->sender_name}}</td>
-                            <td><a href="/storage/{{ $student_assignment->file }}">{{$student_assignment->original_file_name}}</a></td>
+                            <td><a href="/storage/{{ $student_assignment->file }}" download="{{$student_assignment->original_file_name}}">{{$student_assignment->original_file_name}}</a></td>
                             <td>{{$student_assignment->created_at}}</td>
                         </tr>
                     @endforeach

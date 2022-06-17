@@ -44,7 +44,7 @@
               @foreach($files as $file)
                 @if($file->forum_id == $forum->id)
                 {{-- {{ dd($file) }} --}}
-                  <a href="/storage/{{ $file->file }}">{{ $file->original_file_name }}</a>
+                  <a href="/storage/{{ $file->file }}" download="{{ $file->original_file_name }}">{{ $file->original_file_name }}</a>
                 @endif
               @endforeach
             </div>
