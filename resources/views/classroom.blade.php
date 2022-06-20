@@ -10,9 +10,9 @@
         <div class="col border p-4 mb-2">
           <div class="single-forum-header-container d-flex justify-content-between">
             <div class="single-forum-header-identity-container">
-              <p class="m-0"><strong>{{ $forum->creator_name }}</strong></p>
-              <small class="text-muted">created at {{ $forum->created_at->format('Y-m-d') }}</small>
-              {{-- <small class="text-muted">edited</small> --}}
+              <p class="m-0"><strong>{{ $forum->creator_name }}</strong><small><span class="text-muted"> ({{ $forum->created_at->format('Y-m-d') }})</span></small></p>
+              {{-- <small class="text-muted"><p class="m-0"></p></small> --}}
+              <small class="text-muted"><p class="m-0">until {{ $forum->created_at->format('Y-m-d') }}</p></small>
             </div>
 
             @if($forum->creator_id == auth()->user()->id)

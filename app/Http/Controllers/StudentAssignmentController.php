@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Classroom;
 use App\Models\Forum;
 use App\Models\ForumStudentFileAttachment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -38,7 +39,6 @@ class StudentAssignmentController extends Controller
      */
     public function store(Request $request)
     {
-        
         $specified_forum = Forum::find($request["forum_id"]);
         $classroom = Classroom::where("access_code", $specified_forum->classroom_access_code)->get();
 
@@ -60,7 +60,6 @@ class StudentAssignmentController extends Controller
 
             $validatedData['file'] = $request->file("student_file_attachment")->store("forum-student-file-attachment/" . $c->slug . "/" . $sender_name . "/" . $specified_forum_title);
         }
-
 
         ForumStudentFileAttachment::create($validatedData);
         

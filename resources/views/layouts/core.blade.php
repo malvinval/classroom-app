@@ -13,6 +13,7 @@
         <link rel="stylesheet" type="text/css" href="/css/trix.css">
         <script type="text/javascript" src="/js/trix.js"></script>
 
+
         <style>
             trix-toolbar [data-trix-button-group="file-tools"],
             trix-toolbar [data-trix-action="decreaseNestingLevel"],
@@ -47,4 +48,5 @@
             slug.value = preslug.toLowerCase();
         });
     </script>
+
 </html>

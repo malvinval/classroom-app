@@ -42,6 +42,7 @@ class ForumController extends Controller
      */
     public function store(Request $request)
     {
+        
         $classroom = Classroom::where("access_code", $request["classroom_access_code"])->get();
 
         $validatedData = $request->validate([

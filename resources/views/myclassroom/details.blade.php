@@ -25,6 +25,7 @@
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Joined at</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
 
@@ -34,11 +35,33 @@
                         <tr>
                             <td>{{$classroom->registrar_name}} {{ $classroom->registrar_id == auth()->user()->id ? "(You)" : "" }}</td>
                             <td>{{$classroom->created_at->format('Y-m-d')}}</td>
+                            @if(auth()->user()->id == $classroom->creator_id)
+                                <td>
+                                    <form action="/r/{{ $classroom->registrar_id }}" method="POST">
+                                        @csrf
+                                        @method("delete")
+                                        <input type="hidden" name="classroom_access_code" value="{{ $classroom->access_code }}" readonly>
+                                        <button type="submit" onclick="return confirm('Are you sure want to kick out {{ $classroom->registrar_name }} ?');" class="badge bg-danger text-uppercase text-decoration-none border-0">Kick Out</button>
+                                    </form>
+                                </td>
+                            @elseif(auth()->user()->id == $classroom->registrar_id)
+                                <td>
+                                    <form action="/r/{{ $classroom->registrar_id }}" method="POST">
+                                        @csrf
+                                        @method("delete")
+                                        <input type="hidden" name="classroom_access_code" value="{{ $classroom->access_code }}" readonly>
+                                        <button type="submit" onclick="return confirm('Are you sure want to leave {{ $classroom->name }} classroom ?');" class="badge bg-danger text-uppercase text-decoration-none border-0">Leave</button>
+                                    </form>
+                                </td>
+                            @else
+                                <td></td>
+                            @endif
                         </tr>
                     @endforeach
                 @else
                     <tr>
                         <td>No students yet.</td>
+                        <td></td>
                         <td></td>
                     </tr>  
                 @endif

@@ -28,7 +28,6 @@ Route::get('/c/{classroom:access_code}', [SiteController::class, 'classroom'])->
 Route::resource('/mc', MyClassroomController::class)->middleware("auth");
 Route::resource('/f', ForumController::class)->middleware("auth");
 Route::resource('/sa', StudentAssignmentController::class)->middleware("auth");
-
-Route::post('/join', [ClassroomRegistrarController::class, 'store'])->middleware("auth");
+Route::resource('/r', ClassroomRegistrarController::class)->except(['index', 'show', 'create', 'edit', 'update']);
 
 Auth::routes(['verify' => true]);

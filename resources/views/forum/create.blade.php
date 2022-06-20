@@ -64,13 +64,12 @@
                     Yes
                     </label>
                 </div>
-                <div class="form-check">
+                <div class="form-check mb-3">
                     <input class="form-check-input" type="radio" name="isAttachFile" id="flexRadioDefault2" value="N" checked>
                     <label class="form-check-label" for="flexRadioDefault2">
                     No
                     </label>
                 </div>
-
 
                 <button type="submit" class="btn btn-success mt-3">Create</button>
             </form>
