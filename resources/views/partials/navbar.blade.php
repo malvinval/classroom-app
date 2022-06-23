@@ -1,6 +1,7 @@
 <nav class="navbar bg-light fixed-top mb-5">
     <div class="container">
-      <a class="navbar-brand text-success" href="/c">{{ env("APP_NAME") }}</a>
+    
+      <a class="navbar-brand text-success {{ Request::is('/') ? 'opacity-0' : '' }}" href="/c">{{ env("APP_NAME") }}</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>

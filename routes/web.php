@@ -30,4 +30,5 @@ Route::resource('/f', ForumController::class)->middleware("auth");
 Route::resource('/sa', StudentAssignmentController::class)->middleware("auth");
 Route::resource('/r', ClassroomRegistrarController::class)->except(['index', 'show', 'create', 'edit', 'update']);
 
+
 Auth::routes(['verify' => true]);
