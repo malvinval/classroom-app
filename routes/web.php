@@ -21,14 +21,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [SiteController::class, 'index'])->name("home")->middleware("auth");
-Route::get('/c', [SiteController::class, 'classrooms'])->name("classrooms")->middleware("auth");
-Route::get('/c/{classroom:access_code}', [SiteController::class, 'classroom'])->name("classroom")->middleware("auth");
+Route::get('/', [SiteController::class, 'index'])->name("home")->middleware(["auth", "verified"]);
+Route::get('/c', [SiteController::class, 'classrooms'])->name("classrooms")->middleware(["auth", "verified"]);
+Route::get('/c/{classroom:access_code}', [SiteController::class, 'classroom'])->name("classroom")->middleware(["auth", "verified"]);
 
-Route::resource('/mc', MyClassroomController::class)->middleware("auth");
-Route::resource('/f', ForumController::class)->middleware("auth");
-Route::resource('/sa', StudentAssignmentController::class)->middleware("auth");
-Route::resource('/r', ClassroomRegistrarController::class)->except(['index', 'show', 'create', 'edit', 'update']);
+Route::resource('/mc', MyClassroomController::class)->middleware(["auth", "verified"]);
+Route::resource('/f', ForumController::class)->middleware(["auth", "verified"]);
+Route::resource('/sa', StudentAssignmentController::class)->middleware(["auth", "verified"]);
+Route::resource('/r', ClassroomRegistrarController::class)->except(['index', 'show', 'create', 'edit', 'update'])->middleware(["auth", "verified"]);
 
 
 Auth::routes(['verify' => true]);
