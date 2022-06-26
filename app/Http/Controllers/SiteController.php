@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Classroom;
 use App\Models\ClassroomRegistrar;
 use App\Models\Forum;
+use App\Models\ForumComment;
 use App\Models\ForumTeacherFileAttachment;
 
 use Illuminate\Http\Request;
@@ -53,5 +54,16 @@ class SiteController extends Controller
 
     public function test() {
         return view('classroom.join');
+    }
+
+    public function reply($id) {
+        
+        $comment = ForumComment::find($id);
+        // dd($comment);
+        
+        return view('reply.create', [
+            "comment" => $comment,
+            // "specified_forum" => $specified_forum
+        ]);
     }
 }

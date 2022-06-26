@@ -87,9 +87,11 @@
                                 @if(auth()->user()->id == $specified_forum->creator_id || $comment->reply_to_id == auth()->user()->id || $comment->sender_id == auth()->user()->id )
                                     <div class="forum-comment-header d-flex justify-content-between">
                                         <p class="m-0"><strong>{{ $comment->sender_name }}</strong><small><span class="text-muted"> {{ $comment->created_at->format('Y-m-d') }}</span></small></p>
-                                        
-                                        <button class="reply-btn badge bg-primary border-0 {{ $comment->sender_id == auth()->user()->id ? "d-none" : "" }}"><i class="bi bi-reply-fill"></i></button>
-                                        
+
+                                        @if(auth()->user()->id == $specified_forum->creator_id)
+                                            <a href="/reply-comment/{{ $comment->id }}" class="reply-btn badge bg-primary border-0 {{ $comment->sender_id == auth()->user()->id ? "d-none" : "" }}"><i class="bi bi-reply-fill"></i></a>
+                                        @endif
+
                                         @if($comment->sender_id == auth()->user()->id)
                                             <form action="/comment/{{ $comment->id }}" method="POST">
                                                 @csrf
@@ -103,6 +105,7 @@
                             @endforeach
                         </div>
                     </div>
+
                     
                     <form class="caption-form-input" method="POST" action="/comment" class="mb-3">
                         @csrf
@@ -129,5 +132,11 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+        <script>
+            // function toggleReplyInput() {
+            //     let replyInput = document.querySelector(".reply-input");
+            //     replyInput.classList.toggle("d-none");
+            // }
+        </script>
     </body>
 </html>

@@ -107,7 +107,7 @@ class ForumController extends Controller
 
         $student_file_attachment = ForumStudentFileAttachment::where("forum_id", $id)->where("sender_id", auth()->user()->id)->get();
         $teacher_file_attachment = ForumTeacherFileAttachment::where("forum_id", $id)->get();
-        $comments = ForumComment::where("forum_id", $specified_forum->id)->latest()->get();
+        $comments = ForumComment::where("forum_id", $specified_forum->id)->get();
 
         return view('forum.show', [
             "classroom" => $classroom,
