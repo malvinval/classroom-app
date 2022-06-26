@@ -10,28 +10,16 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="/mc/create">New classroom</a></li>
                     @if($myclassrooms->count())
-                    <li><a class="dropdown-item" href="/f/create">New forum</a></li>
+                        <li><a class="dropdown-item" href="/f/create">New forum</a></li>
                     @endif
                 </ul>
             </div>
-            
-            {{-- <div class="dropdown me-1">
-                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-journal-check"></i> Check
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#">Student's Assignments</a></li>
-                    @if($myclassrooms->count())
-                    <li><a class="dropdown-item" href="#">Student's Presence</a></li>
-                    @endif
-                </ul>
-            </div> --}}
         </div>
             
-            <div class="myclassroom-list-container mt-4">
+        <div class="myclassroom-list-container mt-4">
             @if($myclassrooms->count())
                 @foreach ($myclassrooms as $myclassroom)
-                    <div class="card mb-3 me-2" style="width: 400px;">
+                    <div class="card mb-3 me-2" style="max-width: 400px;">
                         <div class="row g-0">
                             <div class="myclassroom-cards row g-0">
                                 <div class="col-md-12">
@@ -40,6 +28,7 @@
                                             <h5 class="card-title">{{ $myclassroom->name }}</h5>
                                             <div class="myclassroom-buttons-container">
                                                 <a href="/mc/{{ $myclassroom->access_code }}" class="badge bg-primary"><i class="bi bi-person-check-fill"></i></a>
+
                                                 <a href="/mc/{{ $myclassroom->access_code }}/edit" class="badge bg-warning"><i class="bi bi-pen-fill"></i></a>
                                                 <form action="/mc/{{ $myclassroom->access_code }}" method="POST" class="d-inline">
                                                     @csrf

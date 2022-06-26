@@ -8,7 +8,8 @@
 
 .card-container, .myclassroom-container, .myclassroom-details-container,
 .create-forum-form-container, .single-forum-detail-header-container,
-.forum-edit-form-container, .student-assignments-container, .home-container {
+.forum-edit-form-container, .student-assignments-container, .home-container, .classrooms-container,
+.join-classroom {
     margin-top: 100px;
 }
 
@@ -29,4 +30,11 @@
     display: block;
     margin: 100px auto;
     z-index: 10;
+}
+
+
+@media screen and (min-width: 768px) {
+    .classroom-search-input {
+        width: 50%;
+    }
 }

@@ -50,4 +50,8 @@ class SiteController extends Controller
             "files" => $files
         ]);
     }
+
+    public function test() {
+        return view('classroom.join');
+    }
 }

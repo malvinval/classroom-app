@@ -16,22 +16,14 @@
               <a class="nav-link {{ Route::is('home') ? 'text-success' : 'text-muted' }}" aria-current="page" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {{ Route::is('classrooms') ? 'text-success' : 'text-muted' }}" aria-current="page" href="/c">Joined classroom</a>
+              <a class="nav-link {{ Route::is('classrooms') ? 'text-success' : 'text-muted' }}" aria-current="page" href="/c">Classroom</a>
             </li>
             <li class="nav-item">
               <a class="nav-link {{ Request::is('mc*') ? 'text-success' : 'text-muted' }}" aria-current="page" href="/mc">My classroom</a>
             </li>
           </ul>
-
-          <form class="d-flex mb-2 mt-2" role="search" method="GET" action="/c">
-            <input class="form-control me-2" name="search" type="search" placeholder="Search a classroom..." aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-          <form class="d-flex" method="POST" action="/r">
-            @csrf
-            <input class="form-control me-2" name="access_code" type="text" placeholder="Enter classroom code..." aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Join</button>
-          </form>
+          
+          
           <form class="d-flex mt-3" action="/logout" method="POST">
             @csrf
             <button type="submit" class="logout-btn bg-transparent border-0">
