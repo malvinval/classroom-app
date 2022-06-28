@@ -26,7 +26,7 @@
                 <div class="single-forum-detail-header-container">
                     <h1 class="display-5 fw-bold text-success">{{ $c->name }}</h1>
                     <p class="col-md-8 fs-6 text-muted">{{ $c->description }}</p>
-                    <hr>  
+                    <hr>
                 </div>
         
                 <div class="single-forum-detail-body-container mt-3">
@@ -83,30 +83,30 @@
                         <h6 class="text-success">Private comments</h6>
                         <hr>
                         <div class="single-comment-identity-container">
-                            @foreach ($comments as $comment)
-                                @if(auth()->user()->id == $specified_forum->creator_id || $comment->reply_to_id == auth()->user()->id || $comment->sender_id == auth()->user()->id )
+                            @if($teacher_view_comments->count() == 0)
+                                <p class="text-muted">No comments yet.</p>
+                            @endif
+                            @if(auth()->user()->id == $specified_forum->creator_id )
+                                @foreach ($teacher_view_comments as $comment)
                                     <div class="forum-comment-header d-flex justify-content-between">
-                                        <p class="m-0"><strong>{{ $comment->sender_name }}</strong><small><span class="text-muted"> {{ $comment->created_at->format('Y-m-d') }}</span></small></p>
-
-                                        @if(auth()->user()->id == $specified_forum->creator_id)
-                                            <a href="/reply-comment/{{ $comment->id }}" class="reply-btn badge bg-primary border-0 {{ $comment->sender_id == auth()->user()->id ? "d-none" : "" }}"><i class="bi bi-reply-fill"></i></a>
-                                        @endif
-
-                                        @if($comment->sender_id == auth()->user()->id)
-                                            <form action="/comment/{{ $comment->id }}" method="POST">
-                                                @csrf
-                                                @method('delete')
-                                                <button class="badge bg-danger border-0" onclick="return confirm('Are you sure want to delete this comment ?');"><i class="bi bi-trash3-fill"></i></button>
-                                            </form>
-                                        @endif
+                                        <ul class="list-group">
+                                            <li class="list-group-item d-flex justify-content-between align-items-center my-1">
+                                                <a class="text-decoration-none" href="/comment/{{ $specified_forum->id }}/{{ $comment->sender_id }}">{{ $comment->sender_name }}</a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <p>{!! $comment->caption !!}</p>
-                                @endif
-                            @endforeach
+                                @endforeach
+                            @else
+                                @foreach ($student_view_comments as $comment)
+                                    @if($comment->forum_id == $specified_forum->id)
+                                        <p><strong>{{ $comment->sender_name }}</strong><small><span class="text-muted"> {{ $comment->created_at }}</span></small></p>
+                                        <p>{!! $comment->caption !!}</p>
+                                    @endif
+                                @endforeach
+                            @endif
                         </div>
                     </div>
 
-                    
                     <form class="caption-form-input" method="POST" action="/comment" class="mb-3">
                         @csrf
                         <div class="mb-3 mt-5">

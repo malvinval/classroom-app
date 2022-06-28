@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Forum;
 use App\Models\ForumComment;
 use Illuminate\Http\Request;
 
@@ -49,7 +50,7 @@ class CommentController extends Controller
 
         ForumComment::create($validatedData);
 
-        return redirect("/f/" . $request->forum_id);
+        return redirect()->back();
     }
 
     /**
@@ -58,9 +59,14 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($forum_id, $sender_id)
     {
-        //
+        $comments = ForumComment::where("reply_to_id", $sender_id)->orWhere("sender_id", $sender_id)->get();
+        // dd($comments);
+        return view("reply.create", [
+            "comments" => $comments,
+            "forum_id" => $forum_id
+        ]);
     }
 
     /**

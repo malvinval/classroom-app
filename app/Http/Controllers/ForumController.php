@@ -6,6 +6,7 @@ use App\Models\Classroom;
 use App\Models\ClassroomRegistrar;
 use App\Models\Forum;
 use App\Models\ForumComment;
+use Illuminate\Support\Facades\DB;
 use App\Models\ForumStudentFileAttachment;
 use App\Models\ForumTeacherFileAttachment;
 use Illuminate\Http\Request;
@@ -107,7 +108,14 @@ class ForumController extends Controller
 
         $student_file_attachment = ForumStudentFileAttachment::where("forum_id", $id)->where("sender_id", auth()->user()->id)->get();
         $teacher_file_attachment = ForumTeacherFileAttachment::where("forum_id", $id)->get();
-        $comments = ForumComment::where("forum_id", $specified_forum->id)->get();
+        $teacher_view_comments = ForumComment::where("forum_id", $specified_forum->id)
+                                  ->where("sender_id", '!=', auth()->user()->id)
+                                  ->select('sender_id', 'sender_name')
+                                  ->distinct('sender_name')->get();
+
+        $student_view_comments = ForumComment::where("reply_to_id", '=', auth()->user()->id)
+                                    ->orWhere("sender_id", '=', auth()->user()->id)
+                                    ->get();
 
         return view('forum.show', [
             "classroom" => $classroom,
@@ -115,7 +123,8 @@ class ForumController extends Controller
             "creator_id" => $specified_forum->creator_id,
             "student_file_attachment" => $student_file_attachment,
             "teacher_file_attachment" => $teacher_file_attachment,
-            "comments" => $comments
+            "teacher_view_comments" => $teacher_view_comments,
+            "student_view_comments" => $student_view_comments
         ]);
     }
 
