@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text("caption");
             $table->integer("sender_id");
             $table->string("sender_name");
+            $table->boolean("isReply")->default(false);
             $table->integer("reply_to_id")->nullable();
             $table->timestamps();
         });

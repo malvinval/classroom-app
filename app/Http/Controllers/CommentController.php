@@ -46,6 +46,7 @@ class CommentController extends Controller
 
         if($request->reply_to_id) {
             $validatedData["reply_to_id"] = $request->reply_to_id;
+            $validatedData["isReply"] = true;
         }
 
         ForumComment::create($validatedData);

@@ -1,6 +1,7 @@
 @extends('layouts.core')
 
 @section('container')
+
     <div class="row container mx-auto mt-4 mb-4">
         <div class="col-md-6">
             <form class="input-group join-classroom" method="POST" action="/r">

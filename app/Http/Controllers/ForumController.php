@@ -108,13 +108,23 @@ class ForumController extends Controller
 
         $student_file_attachment = ForumStudentFileAttachment::where("forum_id", $id)->where("sender_id", auth()->user()->id)->get();
         $teacher_file_attachment = ForumTeacherFileAttachment::where("forum_id", $id)->get();
-        $teacher_view_comments = ForumComment::where("forum_id", $specified_forum->id)
-                                  ->where("sender_id", '!=', auth()->user()->id)
-                                  ->select('sender_id', 'sender_name')
-                                  ->distinct('sender_name')->get();
+        $teacher_view_comments = ForumComment::where("forum_id", $specified_forum->id)->get();
+        $teacher_view_comments_sender_name = ForumComment::where("forum_id", $specified_forum->id)
+                                                         ->select("sender_id","sender_name")
+                                                         ->distinct("sender_name")->latest()->get();
+        $teacher_public_comments = ForumComment::where("forum_id", $specified_forum->id)
+                                               ->where("sender_id", $specified_forum->creator_id)
+                                               ->where("isReply", "=", 0)->get();
+        $student_private_comments = ForumComment::where("forum_id", $specified_forum->id)
+                                                ->where("sender_id", "!=", $specified_forum->creator_id)->get();
+
+        $specified_student_private_comments = ForumComment::where("forum_id", $specified_forum->id)
+                                                            ->where("sender_id", auth()->user()->id)
+                                                            ->get();
 
         $student_view_comments = ForumComment::where("reply_to_id", '=', auth()->user()->id)
                                     ->orWhere("sender_id", '=', auth()->user()->id)
+                                    ->orWhere("sender_id", '=', $specified_forum->creator_id)
                                     ->get();
 
         return view('forum.show', [
@@ -124,7 +134,11 @@ class ForumController extends Controller
             "student_file_attachment" => $student_file_attachment,
             "teacher_file_attachment" => $teacher_file_attachment,
             "teacher_view_comments" => $teacher_view_comments,
-            "student_view_comments" => $student_view_comments
+            "student_view_comments" => $student_view_comments,
+            "teacher_view_comments_sender_name" => $teacher_view_comments_sender_name,
+            "teacher_public_comments" => $teacher_public_comments,
+            "specified_student_private_comments" => $specified_student_private_comments,
+            "student_private_comments" => $student_private_comments
         ]);
     }
 

@@ -80,36 +80,78 @@
         
                 <div class="col-lg-6 mt-5">
                     <div class="comments-container">
-                        <h6 class="text-success">Private comments</h6>
-                        <hr>
                         <div class="single-comment-identity-container">
-                            @if($teacher_view_comments->count() == 0)
+                            @if($teacher_view_comments->count() == 0 )
                                 <p class="text-muted">No comments yet.</p>
-                            @endif
-                            @if(auth()->user()->id == $specified_forum->creator_id )
-                                @foreach ($teacher_view_comments as $comment)
-                                    <div class="forum-comment-header d-flex justify-content-between">
-                                        <ul class="list-group">
-                                            <li class="list-group-item d-flex justify-content-between align-items-center my-1">
-                                                <a class="text-decoration-none" href="/comment/{{ $specified_forum->id }}/{{ $comment->sender_id }}">{{ $comment->sender_name }}</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                @endforeach
                             @else
-                                @foreach ($student_view_comments as $comment)
-                                    @if($comment->forum_id == $specified_forum->id)
-                                        <p><strong>{{ $comment->sender_name }}</strong><small><span class="text-muted"> {{ $comment->created_at }}</span></small></p>
-                                        <p>{!! $comment->caption !!}</p>
-                                    @endif
-                                @endforeach
+                                @if(auth()->user()->id == $specified_forum->creator_id )
+                                    <div class="teacher-forum-comments-container">
+                                        @foreach ($teacher_view_comments as $comment)
+                                            @once
+                                                @if($teacher_public_comments->count() > 0)
+                                                    <h6 class="text-success">Public comments</h6>
+                                                    <hr>
+                                                @endif
+                                            @endonce
+
+                                            @if($comment->sender_id == $specified_forum->creator_id && $comment->isReply == false)
+                                                <p><strong>{{ $comment->sender_name }}</strong><small><span class="text-muted"> {{ $comment->created_at }}</span></small></p>
+                                                <p>{!! $comment->caption !!}</p>
+                                            @endif
+                                        @endforeach
+                                    </div>
+
+                                    <div class="student-private-comments-container mt-4">
+                                        @foreach ($teacher_view_comments_sender_name as $comment)
+                                            @once
+                                                @if($student_private_comments->count() > 0)
+                                                    <h6 class="text-success">Private comments</h6>
+                                                    <hr>
+                                                @endif
+                                            @endonce
+                                            @if($comment->sender_id != $specified_forum->creator_id)
+                                                <p><a class="text-decoration-none" href="/comment/{{ $specified_forum->id }}/{{ $comment->sender_id }}">{{ $comment->sender_name }}</a></p>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <div class="teacher-forum-comments-container">
+                                        @once
+                                            @if($teacher_public_comments->count() > 0)
+                                                <h6 class="text-success">Public comments</h6>
+                                                <hr>
+                                            @endif
+                                        @endonce
+                                        @foreach ($student_view_comments as $comment)
+                                            @if($comment->sender_id == $specified_forum->creator_id && $comment->isReply == false)
+                                                <p><strong>{{ $comment->sender_name }}</strong><small><span class="text-muted"> {{ $comment->created_at }}</span></small></p>
+                                                <p>{!! $comment->caption !!}</p>
+                                            @endif
+                                        @endforeach
+                                    </div>
+
+                                    <div class="student-private-comments-container mt-4">
+                                        @once
+                                            @if($specified_student_private_comments->count() > 0)
+                                                <h6 class="text-success">Private comments</h6>
+                                                <hr>
+                                            @endif
+                                        @endonce
+                                        @foreach ($student_view_comments as $comment)
+                                            @if(($comment->sender_id == $specified_forum->creator_id && $comment->reply_to_id == auth()->user()->id) || $comment->sender_id == auth()->user()->id)
+                                                <p><strong>{{ $comment->sender_name }}</strong><small><span class="text-muted"> {{ $comment->created_at }}</span></small></p>
+                                                <p>{!! $comment->caption !!}</p>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                @endif
                             @endif
                         </div>
                     </div>
 
                     <form class="caption-form-input" method="POST" action="/comment" class="mb-3">
                         @csrf
-                        <div class="mb-3 mt-5">
+                        <div class="mb-3 mt-4">
                             <label for="caption" class="form-label">Add comment to {{ $specified_forum->creator_id == auth()->user()->id ? "all students" : $specified_forum->creator_name }}</label>
                             <input id="caption" type="hidden" name="caption" class="@error('caption') is-invalid @enderror" value="{{ old('caption') }}">
                             <trix-editor input="caption"></trix-editor>

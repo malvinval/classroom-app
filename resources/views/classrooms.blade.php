@@ -1,7 +1,18 @@
 @extends('layouts.core')
 
 @section('container')
-<div class="container classrooms-container">
+    <style>
+        .classrooms-container {
+            margin-top: 100px;
+        }
+
+        @media screen and (min-width: 768px) {
+            .classroom-search-input {
+                width: 50%;
+            }
+        }
+    </style>
+    <div class="container classrooms-container">
         <div class="classrooms-header d-flex">
             <form class="me-2 d-flex classroom-search-input input-group" role="search" method="GET" action="/c">
                 <input type="search" class="form-control" name="search" placeholder="Search a classroom..." aria-label="Search a classroom..." aria-describedby="button-addon2">
@@ -22,7 +33,6 @@
             </div>
             
         </div>
-        
 
         @if (session()->has("success"))
             <div class="toast show border-success" role="alert" aria-live="assertive" aria-atomic="true">

@@ -26,8 +26,8 @@ Route::get('/', [SiteController::class, 'index'])->name("home")->middleware("aut
 Route::get('/c', [SiteController::class, 'classrooms'])->name("classrooms")->middleware("auth");
 Route::get('/c/{classroom:access_code}', [SiteController::class, 'classroom'])->name("classroom")->middleware("auth");
 Route::get('/join-classroom', [SiteController::class, 'test'])->name("join-classroom")->middleware("auth");
-Route::get('/reply-comment/{comment:id}',[SiteController::class, 'reply']);
-Route::get('/comment/{forum:id}/{comment:sender_id}', [CommentController::class, 'show']);
+Route::get('/reply-comment/{comment:id}',[SiteController::class, 'reply'])->middleware("auth");
+Route::get('/comment/{forum:id}/{comment:sender_id}', [CommentController::class, 'show'])->middleware("auth");
 
 Route::resource('/mc', MyClassroomController::class)->middleware("auth");
 Route::resource('/f', ForumController::class)->middleware("auth");
