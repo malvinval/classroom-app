@@ -152,6 +152,10 @@ class ForumController extends Controller
     {
         $forum = Forum::find($id);
 
+        if($forum->creator_id != auth()->user()->id) {
+            abort(403);
+        }
+
         return view('forum.edit', compact("forum"));
     }
 
@@ -220,6 +224,11 @@ class ForumController extends Controller
     public function destroy($id)
     {
         $specified_forum = Forum::find($id);
+
+        if($specified_forum->creator_id != auth()->user()->id) {
+            abort(403);
+        }
+
         $affected_student_file_attachments = ForumStudentFileAttachment::where("forum_id", $id)->get();
         $affected_teacher_file_attachments = ForumTeacherFileAttachment::where("forum_id", $id)->get();
 

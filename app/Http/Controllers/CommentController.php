@@ -62,8 +62,14 @@ class CommentController extends Controller
      */
     public function show($forum_id, $sender_id)
     {
-        $comments = ForumComment::where("reply_to_id", $sender_id)->orWhere("sender_id", $sender_id)->get();
-        // dd($comments);
+        $specified_forum = Forum::find($forum_id);
+
+        if($sender_id == auth()->user()->id || $specified_forum->creator_id == auth()->user()->id) {
+            $comments = ForumComment::where("reply_to_id", $sender_id)->orWhere("sender_id", $sender_id)->get();
+        } else {
+            abort(403);
+        }
+        
         return view("reply.create", [
             "comments" => $comments,
             "forum_id" => $forum_id

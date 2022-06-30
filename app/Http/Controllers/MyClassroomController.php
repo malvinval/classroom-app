@@ -86,8 +86,18 @@ class MyClassroomController extends Controller
     public function show($access_code)
     {
         $classrooms = ClassroomRegistrar::where("access_code", $access_code)->get();
+        $isRegistrar = 0;
 
-        // dd($classroom);
+        foreach($classrooms as $classroom_registrar) {
+            if($classroom_registrar->registrar_id == auth()->user()->id) {
+                $isRegistrar++;
+            }
+        }
+
+        if($isRegistrar == 0) {
+            abort(403);
+        }
+
         return view("myclassroom.details", compact("classrooms"));
     }
 
@@ -101,11 +111,6 @@ class MyClassroomController extends Controller
     public function edit($access_code)
     {
         $classroom = Classroom::where("access_code", $access_code)->get();
-
-        // "classroom_name" => $classroom->name,
-        // "classroom_id" => $classroom->id,
-        // "classroom_slug" => $classroom->slug,
-        // "classroom_description" => $classroom->description
 
         return view("myclassroom.edit", compact("classroom"));
     }
@@ -130,16 +135,6 @@ class MyClassroomController extends Controller
             "slug" => "required",
             "description" => "required|max:255"
         ]);
-
-        // if($request->slug != $classroom[0]->slug) {
-        //     $validatedData = $request->validate([
-        //         "name" => "required|max:255",
-        //         "slug" => "required|unique:classrooms",
-        //         "description" => "required|max:255"
-        //     ]);
-        // }
-
-        // $validatedData["id"] = $classroom[0]->id;
 
         $validatedData["creator_id"] = auth()->user()->id;
         $validatedData["creator_name"] = auth()->user()->name;
